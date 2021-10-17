@@ -24,7 +24,7 @@ docker-compose --version
 Reconnect with your instance
 
 
-## make Dockerfile and docker-compose file :
+## Make Dockerfile and docker-compose file :
 
 - create Dockerfile for create image for mongo-bi connector
 
@@ -46,5 +46,15 @@ sudo docker-compose build
 docker-compose up -d
 ```
 
-## confirm all things are up and running.
+After this we are adding some data into mongodb for testing purpose.
+
+```
+curl https://cube.dev/downloads/events-dump.zip > events-dump.zip
+
+unzip events-dump.zip
+
+docker exec mongo mongorestore dump/stats/events.bson -u root -p admin123  # please mount volume of dump if you want to restore it from local
+```
+
+## Confirm all things are up and running.
 
