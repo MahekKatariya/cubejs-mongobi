@@ -12,7 +12,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: admin123
     volumes:
       - ./data:/data/db
-      - ./dump:/dump
+      #- ./dump:/dump
   mongo-bi:
     image: mongobi
     build:
