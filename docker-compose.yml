@@ -1,0 +1,40 @@
+version: '3.1'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    hostname: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    volumes:
+      - ./data:/data/db
+      - ./dump:/dump
+  mongo-bi:
+    image: mongobi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - "./mongo.pem:/home/mongobi/mongo.pem"
+      - "./mongosqld.conf:/home/mongobi/mongosqld.conf"
+        # - "./logs:/logs"
+    container_name: "mongo-bi"
+    hostname: "mongo-bi"
+    ports:
+      - "3307:3307"
+  cube:
+    image: cubejs/cube:latest
+    container_name: cubejs
+    ports:
+      - 4000:4000 # Cube.js API and Developer Playground
+      - 3000:3000 # Dashboard app, if created
+    env_file: .env
+    volumes:
+      - .:/cube/conf
+      # Prevent dev dependencies leaking
+      - .empty:/cube/conf/node_modules/@cubejs-backend/
