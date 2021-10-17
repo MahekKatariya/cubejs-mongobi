@@ -55,6 +55,14 @@ unzip events-dump.zip
 
 docker exec mongo mongorestore dump/stats/events.bson -u root -p admin123  # please mount volume of dump if you want to restore it from local
 ```
+**Note:** 
+You maybe need to change db name as per your requirement in mongosqld.conf and .env file.
+So,after adding it restart your container by following command -
+
+```
+docker restart mongo-bi   # <<mongobi container name>> 
+docker restart cubejs     # <<cubejs container name>>
+```
 
 ## Confirm all things are up and running.
 
